@@ -25,7 +25,7 @@ export function SubmissionsList({
     <Card>
       <CardHeader
         title="Submissions"
-        subtitle="All submissions are judged together after the deadline."
+        subtitle="Commitments stay hidden; only revealed answers are judged together."
         action={<Badge tone="zinc">{count}</Badge>}
       />
       <CardBody className="space-y-3">
@@ -71,7 +71,9 @@ function SubmissionRow({
   });
 
   const submitter = data?.[0];
-  const answer = data?.[1];
+  const commitment = data?.[1];
+  const revealed = data?.[2];
+  const answer = data?.[3];
 
   return (
     <div
@@ -100,9 +102,22 @@ function SubmissionRow({
         </div>
       </div>
 
-      <p className="mt-2 whitespace-pre-wrap break-words text-sm text-zinc-200">
-        {answer ?? (isLoading ? "" : "-")}
-      </p>
+      {revealed ? (
+        <p className="mt-2 whitespace-pre-wrap break-words text-sm text-zinc-200">
+          {answer ?? (isLoading ? "" : "-")}
+        </p>
+      ) : (
+        <div className="mt-2 flex items-center gap-2">
+          <span className="font-mono text-xs text-zinc-600">
+            {commitment
+              ? `${commitment.slice(0, 10)}…${commitment.slice(-6)}`
+              : isLoading
+                ? ""
+                : "—"}
+          </span>
+          <Badge tone="zinc">Hidden</Badge>
+        </div>
+      )}
 
       {ranking?.reason ? (
         <p className="mt-2 border-t border-white/5 pt-2 text-xs text-zinc-400">

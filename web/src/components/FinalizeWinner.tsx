@@ -84,8 +84,8 @@ export function FinalizeWinner({
           label="Winner index"
           hint={
             recommended !== undefined
-              ? `AI recommends #${recommended}. You decide the final winner.`
-              : `Choose a submission index (0–${Math.max(count - 1, 0)}).`
+              ? `AI recommends #${recommended}. You decide the final winner (must be a revealed submission).`
+              : `Choose a revealed submission index (0–${Math.max(count - 1, 0)}).`
           }
         >
           <Input

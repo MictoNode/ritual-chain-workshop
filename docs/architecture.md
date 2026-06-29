@@ -32,6 +32,34 @@ even that.
 Goal: keep answers hidden **until judging is complete** using Ritual's TEE-backed
 execution.
 
+### Private submission flow (diagram)
+
+```
+[Participant]              [Contract]                 [Ritual TEE]
+     |                         |                            |
+     | 1. encrypt answer for   |                            |
+     |    TEE pubkey           |                            |
+     |--- submitCommitment --->| stores encryptedAnswerRef  |
+     |    (encryptedAnswerRef) | only — NO plaintext        |
+     |                         | on chain                   |
+     |                         |                            |
+     |        ... reveal deadline passes ...                |
+     |                         |                            |
+     |                         | 2. owner judgeAll -------> | 3. decrypt ALL answers
+     |                         |    (ONE batch LLM request) |    INSIDE the enclave,
+     |                         |                            |    feed to the LLM
+     |                         |                            |    together
+     |                         |<-- ranking + ref/hash ---- | 4. only the result
+     |                         | stores revealedAnswersHash |    leaves the enclave
+     |                         |                            |    (plaintext never does)
+     |                         |                            |
+     | 5. owner finalizeWinner |                            |
+     |    (human-in-the-loop)->| pays the winner            |
+     |                         |                            |
+  [Anyone]  6. the published off-chain reveal bundle is auditable against the on-chain
+             revealedAnswersHash
+```
+
 ### Flow
 
 1. Each participant encrypts their answer for a Ritual TEE executor (Ritual key

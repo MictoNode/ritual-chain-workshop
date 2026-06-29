@@ -92,8 +92,8 @@ export function CommitRevealPanel({
     onChanged();
   });
 
-  const inCommit = canCommit(bounty, now / 1000);
-  const inReveal = canReveal(bounty, now / 1000);
+  const inCommit = canCommit(bounty, now);
+  const inReveal = canReveal(bounty, now);
 
   // Nothing actionable for a participant outside the two windows.
   if (!inCommit && !inReveal) return null;

@@ -16,7 +16,7 @@ export function BountyDetail({
   isOwner: boolean;
 }) {
   const now = useNow();
-  const status = getBountyStatus(bounty, now / 1000);
+  const status = getBountyStatus(bounty, now);
   const meta = STATUS_META[status];
 
   return (

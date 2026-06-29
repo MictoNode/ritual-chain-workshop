@@ -89,8 +89,8 @@ export function CreateBountyForm({ onCreated }: { onCreated?: (bountyId: bigint)
       return;
     }
 
-    const submissionDeadlineTs = BigInt(Math.floor(subTs / 1000));
-    const revealDeadlineTs = BigInt(Math.floor(revealTs / 1000));
+    const submissionDeadlineTs = BigInt(Math.floor(subTs));
+    const revealDeadlineTs = BigInt(Math.floor(revealTs));
     const value = reward.trim() === "" ? 0n : parseEther(reward.trim());
     setCreatedId(null);
 

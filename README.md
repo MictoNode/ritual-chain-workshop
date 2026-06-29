@@ -85,6 +85,12 @@ pnpm hardhat test              # everything
 > the 12-field `getBounty` return tuple without "stack too deep"). `hardhat/
 > pnpm-workspace.yaml` allows the esbuild postinstall build.
 
+> **Ritual timestamp quirk:** Ritual's `block.timestamp` is in **milliseconds**,
+> not seconds. The frontend therefore sends submission/reveal deadlines as ms
+> (`Date.getTime()`) and all in-app time comparisons use ms, so they line up with
+> the on-chain timestamp. The contract itself is unit-agnostic (it compares the
+> passed deadline to `block.timestamp`), so this is purely a frontend convention.
+
 ### LLM precompile testing limitation
 
 `judgeAll` calls the Ritual LLM inference precompile (`address(0x0802)`), which
@@ -107,5 +113,3 @@ pnpm hardhat ignition deploy ignition/modules/AIJudge.ts --network ritual
 
 - `docs/architecture.md` — commit-reveal vs Ritual-native (Advanced) design, and
   the reflection answer.
-- `docs/superpowers/specs/2026-06-29-commit-reveal-design.md` — full design spec.
-- `Ritual_AI_Bounty_Judge_Homework.pdf` — the assignment.

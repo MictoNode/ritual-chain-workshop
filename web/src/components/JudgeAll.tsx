@@ -39,7 +39,7 @@ export function JudgeAll({
 
   const count = Number(bounty.submissionCount);
   const revealed = Number(bounty.revealedCount);
-  const revealClosed = Number(bounty.revealDeadline) <= now / 1000;
+  const revealClosed = Number(bounty.revealDeadline) <= now;
 
   // Gate per spec: owner only, reveal window closed, not yet judged.
   if (!isOwner || bounty.judged || bounty.finalized || !revealClosed) {

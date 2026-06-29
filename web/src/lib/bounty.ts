@@ -72,12 +72,12 @@ export type BountyStatus =
 
 export function getBountyStatus(
   b: Bounty,
-  nowSeconds = Date.now() / 1000,
+  nowMs = Date.now(),
 ): BountyStatus {
   if (b.finalized) return "finalized";
   if (b.judged) return "judged";
-  if (Number(b.submissionDeadline) > nowSeconds) return "submitting";
-  if (Number(b.revealDeadline) > nowSeconds) return "revealing";
+  if (Number(b.submissionDeadline) > nowMs) return "submitting";
+  if (Number(b.revealDeadline) > nowMs) return "revealing";
   return "ready";
 }
 
@@ -93,16 +93,16 @@ export const STATUS_META: Record<
 };
 
 /** Can a participant still commit a hidden answer (submission phase)? */
-export function canCommit(b: Bounty, nowSeconds = Date.now() / 1000): boolean {
-  return !b.judged && !b.finalized && Number(b.submissionDeadline) > nowSeconds;
+export function canCommit(b: Bounty, nowMs = Date.now()): boolean {
+  return !b.judged && !b.finalized && Number(b.submissionDeadline) > nowMs;
 }
 
 /** Can a participant reveal a committed answer (reveal window)? */
-export function canReveal(b: Bounty, nowSeconds = Date.now() / 1000): boolean {
+export function canReveal(b: Bounty, nowMs = Date.now()): boolean {
   return (
     !b.judged &&
     !b.finalized &&
-    Number(b.submissionDeadline) <= nowSeconds &&
-    Number(b.revealDeadline) > nowSeconds
+    Number(b.submissionDeadline) <= nowMs &&
+    Number(b.revealDeadline) > nowMs
   );
 }
